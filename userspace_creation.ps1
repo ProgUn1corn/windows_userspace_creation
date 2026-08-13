@@ -70,17 +70,22 @@ foreach ($d in $Dirs) {
 
 Write-Host "All directories processed."
 
-$LinkPath = Join-Path $UserSpaceRoot "Desktop\UserSpace"
+$ShortcutPath = Join-Path $UserSpaceRoot "Desktop\UserSpace.lnk"
 $TargetPath = $UserSpaceRoot
 
-if (-not (Test-Path $LinkPath)) {
-    Write-Host "Creating Desktop link: $LinkPath → $TargetPath"
+if (-not (Test-Path $ShortcutPath)) {
+    Write-Host "Creating Desktop shortcut: $ShortcutPath → $TargetPath"
 
-    cmd /c mklink /D "$LinkPath" "$TargetPath"
+    $WshShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
+    $Shortcut.TargetPath = $TargetPath
+    $Shortcut.WorkingDirectory = $TargetPath
+    $Shortcut.IconLocation = "$env:SystemRoot\system32\shell32.dll,4"
+    $Shortcut.Save()
 
-    Write-Host "Desktop link created."
+    Write-Host "Desktop shortcut created."
 } else {
-    Write-Host "Desktop link already exists: $LinkPath"
+    Write-Host "Desktop shortcut already exists: $ShortcutPath"
 }
 
 Write-Host "Refreshing Explorer..."
