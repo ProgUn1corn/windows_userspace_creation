@@ -1,4 +1,4 @@
-# windows_userspace_creation
+# Windows UserSpace scripts
 Create Windows UserSpace folders similar to XDG user dirs
 
 ## userspace_creation.ps1
