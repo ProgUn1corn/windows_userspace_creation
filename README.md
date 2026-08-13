@@ -9,4 +9,4 @@ The UserSpace contains Assets, Desktop, Documents, Downloads, Games, Music, Proj
 
 It also migrates existing folder contents, updates registry paths, add a shortcut on the desktop and refreshes Explorer so the changes take effect immediately.
 
-**Note: I'm unsure about how Windows treat Desktop and Pictures so they will still be appeared in Users folder, I‘m not changing the shell folder registry, but now Windows treat those folders as the same thing. You will be in env:USERPROFILE/UserSpace/Desktop if you access from env:USERPROFILE/Desktop.**
+**Note: I'm unsure about how Windows treat Desktop and Pictures so they will still be appeared in Users folder, I‘m only changing the user shell folder registry, not the shell folder, but it seems now Windows treat those folders as the same thing. You will be in env:USERPROFILE/UserSpace/Desktop if you access from env:USERPROFILE/Desktop.**
