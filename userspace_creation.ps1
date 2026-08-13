@@ -61,14 +61,27 @@ foreach ($d in $Dirs) {
     # If this folder is a known folder → update registry
     if ($KnownFolders.ContainsKey($d)) {
         $RegKey = $KnownFolders[$d]
-        $RegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders"
+        $RegPath1 = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders"
 
         Write-Host "Updating registry for $d → $NewPath"
-        Set-ItemProperty -Path $RegPath -Name $RegKey -Value $NewPath
+        Set-ItemProperty -Path $RegPath1 -Name $RegKey -Value $NewPath
     }
 }
 
 Write-Host "All directories processed."
+
+$LinkPath = Join-Path $UserSpaceRoot "Desktop\UserSpace"
+$TargetPath = $UserSpaceRoot
+
+if (-not (Test-Path $LinkPath)) {
+    Write-Host "Creating Desktop link: $LinkPath → $TargetPath"
+
+    cmd /c mklink /D "$LinkPath" "$TargetPath"
+
+    Write-Host "Desktop link created."
+} else {
+    Write-Host "Desktop link already exists: $LinkPath"
+}
 
 Write-Host "Refreshing Explorer..."
 Stop-Process -Name explorer -Force
